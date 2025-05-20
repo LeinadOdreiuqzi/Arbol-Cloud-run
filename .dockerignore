@@ -1,0 +1,36 @@
+# Dependencias
+node_modules
+npm-debug.log
+
+# Next.js
+.next
+out
+
+# Archivos de log
+*.log
+
+# Directorios y archivos del sistema
+.DS_Store
+.git
+.github
+.vscode
+
+# Archivos de entorno (pueden contener secretos)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archivos de prueba
+__tests__
+coverage
+
+# Archivos README y documentación
+README.md
+docs
+
+# Archivos de configuración no necesarios en tiempo de ejecución
+.eslintrc.json
+.prettierrc
+jest.config.js
