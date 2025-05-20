@@ -1,0 +1,101 @@
+.rich-text-content {
+  font-family: var(--font-geist-sans);
+  line-height: 1.7;
+  color: var(--foreground);
+}
+
+.rich-text-content h1,
+.rich-text-content h2,
+.rich-text-content h3,
+.rich-text-content h4,
+.rich-text-content h5,
+.rich-text-content h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.rich-text-content h1 {
+  font-size: calc(var(--text-base-size) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+  margin-bottom: 1.5rem;
+}
+
+.rich-text-content h2 {
+  font-size: calc(var(--text-base-size) * var(--text-scale-ratio) * var(--text-scale-ratio));
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.rich-text-content h3 {
+  font-size: calc(var(--text-base-size) * var(--text-scale-ratio));
+}
+
+.rich-text-content p {
+  margin-bottom: 1.5rem;
+  max-width: 70ch;
+  text-align: justify;
+  hyphens: auto;
+  word-spacing: 0.05em;
+  letter-spacing: 0.01em;
+}
+
+.rich-text-content ul,
+.rich-text-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+.rich-text-content blockquote {
+  border-left: 3px solid var(--accent-color);
+  padding: 0.8rem 1.2rem;
+  margin: 1.5rem 0;
+  color: var(--muted-foreground);
+  background: var(--aside-bg);
+  border-radius: 4px;
+  font-style: italic;
+}
+
+.rich-text-content a {
+  color: var(--accent-color);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.rich-text-content a:hover {
+  border-bottom-color: var(--accent-color);
+}
+
+.rich-text-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+}
+
+.rich-text-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+}
+
+.rich-text-content th,
+.rich-text-content td {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+}
+
+.rich-text-content th {
+  background: var(--nav-bg);
+  font-weight: 600;
+}
+
+.rich-text-empty {
+  font-style: italic;
+  color: var(--muted-foreground);
+  padding: 1.5rem 0;
+}

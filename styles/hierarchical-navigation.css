@@ -1,0 +1,192 @@
+/* Estilos para el componente de navegación jerárquica */
+
+.hierarchical-navigation {
+  --node-hover-bg-light: rgba(59, 130, 246, 0.08);
+  --node-hover-bg-dark: rgba(59, 130, 246, 0.15);
+  --node-selected-bg-light: rgba(59, 130, 246, 0.1);
+  --node-selected-bg-dark: rgba(59, 130, 246, 0.2);
+  --node-text-light: #374151;
+  --node-text-dark: #e5e7eb;
+  --node-selected-text-light: #2563eb;
+  --node-selected-text-dark: #60a5fa;
+  --border-light: rgba(0, 0, 0, 0.1);
+  --border-dark: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para la barra de búsqueda */
+.search-bar input {
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.search-bar input:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Estilos para los nodos */
+.nav-node {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.nav-node .node-content {
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-node .node-content:hover {
+  background-color: var(--node-hover-bg-light);
+}
+
+html[data-theme="dark"] .nav-node .node-content:hover {
+  background-color: var(--node-hover-bg-dark);
+}
+
+.nav-node.selected .node-content {
+  background-color: var(--node-selected-bg-light);
+}
+
+html[data-theme="dark"] .nav-node.selected .node-content {
+  background-color: var(--node-selected-bg-dark);
+}
+
+/* Estilos para los botones de expansión */
+.expand-button {
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.expand-button:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+html[data-theme="dark"] .expand-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para los enlaces de nodos */
+.node-link {
+  transition: all 0.2s ease;
+}
+
+.node-link:hover {
+  color: var(--node-selected-text-light);
+}
+
+html[data-theme="dark"] .node-link:hover {
+  color: var(--node-selected-text-dark);
+}
+
+/* Estilos para los botones de favoritos */
+.favorite-button {
+  opacity: 0.3;
+  transition: all 0.2s ease;
+}
+
+.favorite-button:hover {
+  opacity: 0.8;
+}
+
+.favorite-button.active {
+  opacity: 1;
+}
+
+/* Estilos para las líneas de conexión entre nodos */
+.depth-1, .depth-2, .depth-3, .depth-4, .depth-5 {
+  position: relative;
+}
+
+.depth-1::before, .depth-2::before, .depth-3::before, .depth-4::before, .depth-5::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--border-light);
+}
+
+html[data-theme="dark"] .depth-1::before, 
+html[data-theme="dark"] .depth-2::before, 
+html[data-theme="dark"] .depth-3::before, 
+html[data-theme="dark"] .depth-4::before, 
+html[data-theme="dark"] .depth-5::before {
+  background-color: var(--border-dark);
+}
+
+/* Indicador de tipo de nodo */
+.node-type-indicator {
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  min-width: 16px;
+  text-align: center;
+  display: inline-block;
+}
+
+/* Contador de hijos */
+.children-count {
+  font-size: 10px;
+  padding: 1px 4px;
+  border-radius: 10px;
+  opacity: 0.7;
+}
+
+/* Estilos para los resultados de búsqueda */
+.search-results {
+  margin-bottom: 16px;
+}
+
+/* Animaciones para mejorar la experiencia de usuario */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hierarchical-navigation {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .hierarchical-navigation {
+    font-size: 0.9rem;
+  }
+  
+  .node-content {
+    padding: 4px 6px;
+  }
+  
+  .search-bar input {
+    padding: 6px 10px 6px 28px;
+  }
+}
+
+/* Mejoras de accesibilidad */
+.node-link:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.expand-button:focus-visible,
+.favorite-button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Estilos para la carga progresiva */
+.node-children {
+  animation: fadeIn 0.2s ease;
+}
+
+/* Estilos para la sección de favoritos */
+.favorites-section {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+html[data-theme="dark"] .favorites-section {
+  border-bottom-color: var(--border-dark);
+}

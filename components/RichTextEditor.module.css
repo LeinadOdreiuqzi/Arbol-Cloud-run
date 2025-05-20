@@ -1,0 +1,459 @@
+.notion-content-area {
+  background: #181c24;
+  color: #f3f6fa;
+  border-radius: 10px;
+  min-height: 240px;
+  padding: 18px 16px 18px 36px;
+  font-size: 1.13rem;
+  border: 1.5px solid #23283a;
+  box-shadow: 0 4px 32px #0005;
+  transition: background 0.2s, color 0.2s;
+}
+
+.notion-content-area h1, .notion-content-area h2, .notion-content-area h3 {
+  color: #e5e9f7;
+}
+
+.notion-content-area blockquote {
+  background: #23283a;
+  border-left: 4px solid #6cc3ff;
+  color: #b8c5e6;
+  padding: 8px 18px;
+  margin: 8px 0;
+  border-radius: 6px;
+}
+
+.notion-drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -36px;
+  margin-right: 8px;
+  border-radius: 6px;
+  cursor: grab;
+  background: none;
+  color: #9fa8c2;
+  opacity: 0.7;
+  transition: background 0.15s, opacity 0.15s;
+}
+.notion-drag-handle:hover {
+  background: #23283a;
+  color: #fff;
+  opacity: 1;
+}
+
+.notion-drag-icon {
+  font-size: 1.3em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* --- Editor Container & Structure --- */
+/* Container principal del editor */
+.editorContainer {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  transition: border-color 0.3s ease;
+  background-color: #fff; /* Fondo blanco para el contenedor */
+  min-height: 200px; /* Altura mínima para que sea visible */
+  display: flex; /* Para que el contenido crezca */
+  flex-direction: column; /* Dirección vertical */
+}
+
+.editorContainer.focused {
+  border-color: #007bff; /* Color de borde al enfocar */
+  box-shadow: 0 0 0 1px rgba(0, 123, 255, 0.25); /* Sombra sutil al enfocar */
+}
+
+/* Área de contenido del editor (donde se escribe) */
+.editorContent {
+  flex-grow: 1; /* Permite que el área de contenido crezca */
+  outline: none; /* Quita el borde de enfoque predeterminado */
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Estilos para el placeholder */
+.editorContent p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Menú flotante (BubbleMenu) */
+.bubbleMenu {
+  background-color: #343a40; /* Fondo oscuro */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: inline-flex; /* Cambiado a inline-flex para que el width funcione mejor */
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 5px;
+  width: fit-content; /* Fuerza al contenedor a ajustarse al ancho de su contenido */
+}
+
+/* Botones dentro del BubbleMenu */
+.bubbleMenu button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+}
+
+.bubbleMenu button:hover {
+  background-color: #495057; /* Color de fondo al pasar el ratón */
+}
+
+/* Estilo para botones activos */
+.bubbleMenu button.isActive {
+  background-color: #007bff; /* Color distintivo para botones activos */
+  color: white;
+}
+
+/* Separador en el BubbleMenu */
+.separator {
+  color: #6c757d; /* Color grisáceo para el separador */
+  margin: 0 5px;
+  align-self: center; /* Centra verticalmente */
+}
+
+/* Popup de sugerencias (Slash Commands) */
+.suggestionPopup {
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 5px 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.suggestionPopup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggestionPopup li {
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.suggestionPopup li:hover {
+  background-color: #f1f3f5; /* Fondo claro al pasar el ratón */
+}
+
+/* Puedes añadir más estilos específicos para nodos como imágenes, tablas, etc. */
+.editorContent img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* Evita espacio extra debajo */
+  margin: 10px 0;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.editorContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+.editorContent th,
+.editorContent td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.editorContent th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.editorContent pre {
+  background: #f1f3f5;
+  color: #343a40;
+  font-family: 'JetBrainsMono', monospace; /* O tu fuente mono preferida */
+  padding: 15px;
+  border-radius: 4px;
+  overflow-x: auto; /* Scroll horizontal si el código es largo */
+}
+
+.editorContent code {
+  background: rgba(135, 131, 120, 0.15);
+  color: #EB5757; /* O el color que prefieras */
+  padding: 0.1em 0.3em;
+  border-radius: 2px;
+  font-size: 0.9em;
+}
+
+.editorContent pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+
+.tiptap {
+  outline: none; /* Remove focus outline */
+  padding: 8px; /* Add some padding inside the editor */
+  flex-grow: 1; /* Allow editor content area to grow */
+  overflow-y: auto; /* Allow editor content to scroll if it overflows */
+}
+
+.tiptap > * + * {
+  margin-top: 0.75em; /* Add space between blocks */
+}
+
+.tiptap ul,
+.tiptap ol {
+  padding: 0 1rem;
+}
+
+.tiptap h1,
+.tiptap h2,
+.tiptap h3,
+.tiptap h4,
+.tiptap h5,
+.tiptap h6 {
+  line-height: 1.1;
+}
+
+.tiptap code {
+  background-color: rgba(97, 97, 97, 0.1);
+  color: #616161;
+  padding: 0.2em 0.4em;
+  border-radius: 5px;
+  font-size: 85%;
+}
+
+.tiptap pre {
+  background: #0D0D0D;
+  color: #FFF;
+  font-family: 'JetBrainsMono', monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.tiptap pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.8rem;
+}
+
+.tiptap blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(13, 13, 13, 0.1);
+}
+
+.tiptap hr {
+  border: none;
+  border-top: 2px solid rgba(13, 13, 13, 0.1);
+  margin: 2rem 0;
+}
+
+.tiptap table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.tiptap td,
+.tiptap th {
+  min-width: 1em;
+  border: 2px solid #ced4da;
+  padding: 3px 5px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.tiptap th {
+  font-weight: bold;
+  text-align: left;
+  background-color: #f1f3f5;
+}
+
+.tiptap .selectedCell:after {
+  z-index: 2;
+  position: absolute;
+  content: "";
+  left: 0; right: 0; top: 0; bottom: 0;
+  background: rgba(200, 200, 255, 0.4);
+  pointer-events: none;
+}
+
+.tiptap .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background-color: #adf;
+  pointer-events: none;
+}
+
+/* --- Menu Bar --- */
+.menuBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px; /* Slightly smaller gap */
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.menuButton {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.menuButton:hover {
+  background-color: #e9ecef;
+  border-color: #ced4da;
+}
+
+.menuButton.isActive {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+.menuButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Otros bloques personalizados */
+.custom-alert {
+  background: #2a2233;
+  color: #ffe9b3;
+  border-left: 4px solid #ffb347;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin: 8px 0;
+}
+
+/* Ajustes para el menú contextual */
+.floating-menu {
+  background: #23283a;
+  color: #f3f6fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px #0009;
+  padding: 12px 14px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+}
+.floating-menu button {
+  background: none;
+  border: none;
+  color: #f3f6fa;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+}
+.floating-menu button:hover {
+  background: #2f3750;
+  color: #6cc3ff;
+}
+
+/* --- Block Insert Handle (+) Button --- */
+/* Position relative on the content area allows absolute positioning inside */
+.editorContent {
+  position: relative;
+  /* Add some padding to the left to make space for the handle */
+  padding-left: 30px; /* Adjust as needed */
+}
+
+/* Style the button itself */
+/* Use :global because the button is added directly to the ProseMirror view, not via React */
+.editorContent :global(.block-insert-handle) {
+  position: absolute;
+  left: 5px; /* Position in the padding area */
+  top: 0; /* Aligns with the top of the block it's attached to */
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 18px; /* Center the '+' vertically */
+  text-align: center;
+  color: #555;
+  opacity: 0; /* Hide by default */
+  transition: opacity 0.2s ease-in-out;
+  z-index: 10; /* Ensure it's above text but below menus */
+}
+
+/* Show the handle on hover of the editor content area */
+/* Note: This makes ALL handles show on hover. A more refined approach */
+/* might only show the handle for the specific block being hovered, */
+/* which is more complex to implement. */
+.editorContent:hover :global(.block-insert-handle) {
+  opacity: 1;
+}
+
+/* Optional: Highlight on hover */
+.editorContent :global(.block-insert-handle:hover) {
+  background-color: #eee;
+}
+
+/* --- End Block Insert Handle --- */
+
+/* --- Suggestion Popup --- */
+.suggestionPopup {
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 4px;
+  min-width: 150px;
+  z-index: 50; /* Ensure it's above editor content */
+}
+
+.suggestionPopup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggestionPopup li {
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.suggestionPopup li:hover,
+.suggestionPopup li.is-selected { /* Style for hover and selected */
+  background-color: #f0f0f0;
+}

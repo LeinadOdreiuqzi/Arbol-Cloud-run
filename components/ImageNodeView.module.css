@@ -1,0 +1,27 @@
+/* components/ImageNodeView.module.css */
+
+.imageWrapper {
+  /* Use inline-block or block depending on desired layout */
+  display: inline-block;
+  position: relative; /* Needed for absolute positioning of handles later */
+  line-height: 0; /* Prevent extra space below image */
+  max-width: 100%; /* Ensure image doesn't overflow container */
+  cursor: default; /* Or 'grab' if using drag handle */
+}
+
+.resizableImage {
+  display: block; /* Ensure img is block level within wrapper */
+  max-width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  user-select: none; /* Prevent selecting image text */
+  -webkit-user-drag: none; /* Prevent default browser image drag */
+}
+
+/* Style when the node is selected */
+.selected .resizableImage {
+  outline: 2px solid #6cc3ff; /* Highlight selected image */
+  box-shadow: 0 0 0 2px #6cc3ff;
+}
+
+/* --- Placeholder styles for future elements --- */
+/* Placeholders removed, will add actual styles when implemented */
