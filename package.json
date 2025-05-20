@@ -42,7 +42,8 @@
     "remark-directive": "^4.0.0",
     "tippy.js": "^6.3.7",
     "tiptap-markdown": "^0.8.10",
-    "unist-util-visit": "^2.0.3"
+    "unist-util-visit": "^2.0.3",
+    "pg": "^8.11.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
