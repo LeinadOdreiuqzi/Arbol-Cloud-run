@@ -17,7 +17,7 @@ steps:
       - '--image'
       - 'gcr.io/$PROJECT_ID/arboldelaciencia:$COMMIT_SHA'
       - '--region'
-      - 'us-central1'
+      - 'us-south1'
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
@@ -32,7 +32,7 @@ images:
 
 # Variables de sustitución para configuración
 substitutions:
-  _CLOUDSQL_INSTANCE: '$PROJECT_ID:us-central1:arbol-ciencia-db'  # Usa la variable de proyecto automática
+  _CLOUDSQL_INSTANCE: '$PROJECT_ID:us-south1:arbol-ciencia-db'  # Usa la variable de proyecto automática
   _DB_USER: 'postgres'
   _DB_NAME: 'arbol_ciencia'
   _DB_PASS: 'sm://projects/$PROJECT_ID/secrets/db-password/versions/latest'  # Usando Secret Manager
