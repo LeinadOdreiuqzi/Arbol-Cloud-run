@@ -1,11 +1,11 @@
 steps:
   # Construir la imagen Docker
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/arboldelaciencia:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA', '.']
   
   # Enviar la imagen al Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/arboldelaciencia:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA']
   
   # Desplegar a Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -13,9 +13,9 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - 'arboldelaciencia'
+      - 'web_arboldelaciencia'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/arboldelaciencia:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA'
       - '--region'
       - 'us-south1'
       - '--platform'
@@ -28,7 +28,7 @@ steps:
 
 # Almacenar la imagen en Container Registry
 images:
-  - 'gcr.io/$PROJECT_ID/arboldelaciencia:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA'
 
 # Variables de sustitución para configuración
 substitutions:
