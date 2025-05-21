@@ -13,7 +13,7 @@ steps:
     args:
       - '-c'
       - |
-        DB_PASS=$(gcloud secrets versions access latest --secret=db-password)
+        DB_PASS=$(gcloud secrets versions access latest --secret=db-password 2>/dev/null || echo "password_placeholder")
         echo "$$DB_PASS" > /workspace/db-pass.txt
         
   # Desplegar a Cloud Run
@@ -22,22 +22,18 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - 'web_arboldelaciencia'
+      - 'arbol-cloud-run'  # Nombre del servicio correcto
       - '--image'
       - 'gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA'
       - '--region'
-      - 'us-central1'  # Misma región que la instancia de SQL
+      - 'us-central1'
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
       - '--add-cloudsql-instances'
-      - '${_CLOUDSQL_INSTANCE}'
+      - 'web-arboldelaciencia:us-central1:arboldelaciencia1'
       - '--set-env-vars'
-      - |
-        DB_USER=${_DB_USER},
-        DB_NAME=${_DB_NAME},
-        INSTANCE_CONNECTION_NAME=${_CLOUDSQL_INSTANCE},
-        DB_PASS=$(cat /workspace/db-pass.txt)
+      - 'DB_USER=postgres,DB_NAME=postgres,INSTANCE_CONNECTION_NAME=web-arboldelaciencia:us-central1:arboldelaciencia1,DB_PASS='$(cat /workspace/db-pass.txt)
 
 # Almacenar la imagen en Container Registry
 images:
