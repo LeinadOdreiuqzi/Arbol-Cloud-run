@@ -9,8 +9,8 @@ WORKDIR /app
 
 # Copiar package.json y package-lock.json (si está disponible)
 COPY package.json package-lock.json* ./
-# Instalar dependencias basadas en el lockfile
-RUN npm ci
+# Instalar dependencias y actualizar package-lock.json
+RUN npm install
 
 # Reconstruir el código fuente solo cuando sea necesario
 FROM base AS builder
