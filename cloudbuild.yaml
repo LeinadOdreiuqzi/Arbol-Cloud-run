@@ -37,8 +37,6 @@ steps:
         DB_USER=${_DB_USER},
         DB_NAME=${_DB_NAME},
         INSTANCE_CONNECTION_NAME=${_CLOUDSQL_INSTANCE},
-        DB_HOST=/cloudsql/${_CLOUDSQL_INSTANCE},
-        DB_PORT=5432,
         DB_PASS=$(cat /workspace/db-pass.txt)
 
 # Almacenar la imagen en Container Registry
