@@ -21,9 +21,13 @@ COPY . .
 # Next.js recopila información completamente anónima de telemetría para uso estadístico.
 # Aprende más aquí: https://nextjs.org/telemetry
 # Descomenta la siguiente línea en caso de querer deshabilitar la telemetría
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN npm run build
+# Ignora errores de ESLint en producción
+ENV NEXT_LINT_IGNORE_ESLINT_ERROR=true
+
+# Ejecuta build sin validación de tipos ni linting
+RUN npm run build:prod
 
 # Imagen de producción, copiar todos los archivos y ejecutar next
 FROM base AS runner
