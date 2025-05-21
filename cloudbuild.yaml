@@ -34,7 +34,7 @@ images:
 substitutions:
   _CLOUDSQL_INSTANCE: 'web-arboldelaciencia:us-central1:arboldelaciencia1'  # Nombre de conexión exacto
   _DB_USER: 'postgres'
-  _DB_NAME: 'arbol_ciencia'
+  _DB_NAME: 'postgres'
   _DB_PASS: 'sm://projects/$PROJECT_ID/secrets/db-password/versions/latest'  # Usando Secret Manager
 
 # Configuración de tiempo de construcción
