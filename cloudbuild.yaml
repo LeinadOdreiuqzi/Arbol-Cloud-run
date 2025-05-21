@@ -7,6 +7,15 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA']
   
+  # Acceder a Secret Manager para obtener la contraseña de la BD
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        DB_PASS=$(gcloud secrets versions access latest --secret=db-password)
+        echo "$$DB_PASS" > /workspace/db-pass.txt
+        
   # Desplegar a Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
@@ -17,14 +26,20 @@ steps:
       - '--image'
       - 'gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA'
       - '--region'
-      - 'us-south1'
+      - 'us-central1'  # Misma región que la instancia de SQL
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
       - '--add-cloudsql-instances'
       - '${_CLOUDSQL_INSTANCE}'
       - '--set-env-vars'
-      - 'DB_USER=${_DB_USER},DB_PASS=${_DB_PASS},DB_NAME=${_DB_NAME},INSTANCE_CONNECTION_NAME=${_CLOUDSQL_INSTANCE}'
+      - |
+        DB_USER=${_DB_USER},
+        DB_NAME=${_DB_NAME},
+        INSTANCE_CONNECTION_NAME=${_CLOUDSQL_INSTANCE},
+        DB_HOST=/cloudsql/${_CLOUDSQL_INSTANCE},
+        DB_PORT=5432,
+        DB_PASS=$(cat /workspace/db-pass.txt)
 
 # Almacenar la imagen en Container Registry
 images:
@@ -35,7 +50,7 @@ substitutions:
   _CLOUDSQL_INSTANCE: 'web-arboldelaciencia:us-central1:arboldelaciencia1'  # Nombre de conexión exacto
   _DB_USER: 'postgres'
   _DB_NAME: 'postgres'
-  _DB_PASS: 'lI][\S4B#\89%Gyf'  # Usando Secret Manager
+  # La contraseña ahora proviene de Secret Manager
 
 # Configuración de tiempo de construcción
 timeout: 1800s  # 30 minutos
