@@ -16,24 +16,53 @@ steps:
         DB_PASS=$(gcloud secrets versions access latest --secret=db-password 2>/dev/null || echo "password_placeholder")
         echo "$$DB_PASS" > /workspace/db-pass.txt
         
-  # Desplegar a Cloud Run
+  # Desplegar a Cloud Run - Enfoque diferente para conectar a Cloud SQL
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: gcloud
+    entrypoint: 'bash'
     args:
-      - 'run'
-      - 'deploy'
-      - 'arbol-cloud-run'  # Nombre del servicio correcto
-      - '--image'
-      - 'gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA'
-      - '--region'
-      - 'us-central1'
-      - '--platform'
-      - 'managed'
-      - '--allow-unauthenticated'
-      - '--add-cloudsql-instances'
-      - 'web-arboldelaciencia:us-central1:arboldelaciencia1'
-      - '--set-env-vars'
-      - 'DB_USER=postgres,DB_NAME=postgres,INSTANCE_CONNECTION_NAME=web-arboldelaciencia:us-central1:arboldelaciencia1,DB_PASS='$(cat /workspace/db-pass.txt)
+      - '-c'
+      - |
+        # Crear un archivo de configuración YAML para el despliegue
+        cat > service.yaml << EOF
+        apiVersion: serving.knative.dev/v1
+        kind: Service
+        metadata:
+          name: arbol-cloud-run
+        spec:
+          template:
+            metadata:
+              annotations:
+                run.googleapis.com/cloudsql-instances: web-arboldelaciencia:us-central1:arboldelaciencia1
+                autoscaling.knative.dev/maxScale: "10"
+                run.googleapis.com/cpu-throttling: "false"
+            spec:
+              serviceAccountName: cloud-run-service-account
+              containers:
+              - image: gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA
+                ports:
+                - containerPort: 8080
+                env:
+                - name: DB_USER
+                  value: postgres
+                - name: DB_NAME
+                  value: postgres
+                - name: DB_PASS
+                  value: $(cat /workspace/db-pass.txt)
+                - name: INSTANCE_CONNECTION_NAME
+                  value: web-arboldelaciencia:us-central1:arboldelaciencia1
+                - name: DB_PUBLIC_IP
+                  value: "34.41.227.140"
+                - name: DB_PORT
+                  value: "5432"
+                resources:
+                  limits:
+                    cpu: 1
+                    memory: 512Mi
+        EOF
+        # Desplegar usando el archivo YAML
+        gcloud run services replace service.yaml \
+          --platform=managed \
+          --region=us-central1
 
 # Almacenar la imagen en Container Registry
 images:
