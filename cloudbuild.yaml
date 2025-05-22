@@ -33,6 +33,10 @@ steps:
             metadata:
               annotations:
                 run.googleapis.com/cloudsql-instances: web-arboldelaciencia:us-central1:arboldelaciencia1
+                run.googleapis.com/startup-probe-period: "120"
+                run.googleapis.com/startup-probe-timeout: "5"
+                run.googleapis.com/startup-probe-failure-threshold: "20"
+                run.googleapis.com/execution-environment: "gen2"
                 autoscaling.knative.dev/maxScale: "10"
                 run.googleapis.com/cpu-throttling: "false"
             spec:
@@ -63,6 +67,9 @@ steps:
                   limits:
                     cpu: 1
                     memory: 512Mi
+                  requests:
+                    cpu: 0.5
+                    memory: 256Mi
         EOF
         # Desplegar usando el archivo YAML
         gcloud run services replace service.yaml \
