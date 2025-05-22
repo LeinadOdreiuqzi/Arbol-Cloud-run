@@ -16,65 +16,33 @@ steps:
         DB_PASS=$(gcloud secrets versions access latest --secret=db-password 2>/dev/null || echo "password_placeholder")
         echo "$$DB_PASS" > /workspace/db-pass.txt
         
-  # Desplegar a Cloud Run - Enfoque diferente para conectar a Cloud SQL
+  # Desplegar a Cloud Run usando gcloud run deploy directamente
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'bash'
+    entrypoint: 'gcloud'
     args:
-      - '-c'
-      - |
-        # Crear un archivo de configuración YAML para el despliegue
-        cat > service.yaml << EOF
-        apiVersion: serving.knative.dev/v1
-        kind: Service
-        metadata:
-          name: arbol-cloud-run
-        spec:
-          template:
-            metadata:
-              annotations:
-                run.googleapis.com/cloudsql-instances: web-arboldelaciencia:us-central1:arboldelaciencia1
-                run.googleapis.com/startup-probe-period: "120"
-                run.googleapis.com/startup-probe-timeout: "5"
-                run.googleapis.com/startup-probe-failure-threshold: "20"
-                run.googleapis.com/execution-environment: "gen2"
-                autoscaling.knative.dev/maxScale: "10"
-                run.googleapis.com/cpu-throttling: "false"
-            spec:
-              serviceAccountName: cloud-run-service-account
-              containers:
-              - image: gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA
-                ports:
-                - containerPort: 8080
-                env:
-                - name: DB_USER
-                  value: "postgres"
-                - name: DB_NAME
-                  value: "postgres"
-                - name: DB_PASS
-                  valueFrom:
-                    secretKeyRef:
-                      name: db-password
-                      key: latest
-                - name: INSTANCE_CONNECTION_NAME
-                  value: "web-arboldelaciencia:us-central1:arboldelaciencia1"
-                - name: DB_PUBLIC_IP
-                  value: "34.41.227.140"
-                - name: DB_PORT
-                  value: "5432"
-                - name: NODE_ENV
-                  value: "production"
-                resources:
-                  limits:
-                    cpu: 1
-                    memory: 512Mi
-                  requests:
-                    cpu: 0.5
-                    memory: 256Mi
-        EOF
-        # Desplegar usando el archivo YAML
-        gcloud run services replace service.yaml \
-          --platform=managed \
-          --region=us-central1
+      - 'run'
+      - 'deploy'
+      - 'arbol-cloud-run' # Nombre de tu servicio Cloud Run
+      - '--image=gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA'
+      - '--platform=managed'
+      - '--region=us-central1'
+      - '--service-account=cloud-run-service-account'
+      - '--add-cloudsql-instances=web-arboldelaciencia:us-central1:arboldelaciencia1'
+      - '--update-env-vars=DB_USER=postgres,DB_NAME=postgres,INSTANCE_CONNECTION_NAME=web-arboldelaciencia:us-central1:arboldelaciencia1,DB_PUBLIC_IP=34.41.227.140,DB_PORT=5432,NODE_ENV=production'
+      - '--set-secrets=DB_PASS=db-password:latest' # Correcta forma de referenciar la última versión del secreto
+      - '--cpu=1'
+      - '--memory=512Mi'
+      - '--min-instances=0' # O el valor que prefieras
+      - '--max-instances=10'
+      - '--port=8080'
+      - '--cpu-throttling=false' # Si es necesario
+      - '--startup-cpu-boost' # Considera habilitar esto
+      - '--timeout=300s' # Ajusta según necesidad
+      # Anotaciones para el sondeo de inicio (si son diferentes a los defaults o necesitas gen2 explícitamente)
+      # Si usas gen2, algunas anotaciones como las de startup-probe podrían manejarse diferente o tener defaults mejorados.
+      # Revisa la documentación para --execution-environment=gen2 si es un requisito estricto.
+      # Ejemplo de cómo se podrían añadir anotaciones si fuera necesario (aunque set-secrets y update-env-vars es mejor para envs):
+      # --update-annotations=run.googleapis.com/startup-probe-period=120s,run.googleapis.com/startup-probe-timeout=5s,run.googleapis.com/startup-probe-failure-threshold=20
 
 # Almacenar la imagen en Container Registry
 images:
