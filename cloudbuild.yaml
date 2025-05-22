@@ -80,12 +80,5 @@ steps:
 images:
   - 'gcr.io/$PROJECT_ID/web_arboldelaciencia:$COMMIT_SHA'
 
-# Variables de sustitución para configuración
-substitutions:
-  _CLOUDSQL_INSTANCE: 'web-arboldelaciencia:us-central1:arboldelaciencia1'  # Nombre de conexión exacto
-  _DB_USER: 'postgres'
-  _DB_NAME: 'postgres'
-  # La contraseña ahora proviene de Secret Manager
-
 # Configuración de tiempo de construcción
 timeout: 1800s  # 30 minutos
