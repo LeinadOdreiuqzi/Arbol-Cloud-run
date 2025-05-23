@@ -62,7 +62,7 @@ body {
   color: var(--foreground);
   font-family: 'Geist', Arial, Helvetica, sans-serif;
   font-size: var(--text-base-size);
-  line-height: var(--line-height, 1.75);
+  line-height: var(--line-height, 1.75); 
   letter-spacing: var(--letter-spacing, 0.01em);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
