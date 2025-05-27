@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useRouter, usePathname } from "next/navigation";
-import { TopicNode } from "../lib/notes-graph-util";
+import { TopicNode } from "@/lib/notes-graph-util";
 import type { ForceGraphMethods } from "react-force-graph-2d";
 
 // Dynamically import ForceGraph2D to avoid SSR issues
