@@ -1,0 +1,38 @@
+/* components/ResizableImageNodeView.module.css */
+
+.imageWrapper {
+    display: inline-block; /* Matches the inline style in the component */
+    position: relative;
+    line-height: 0; /* Matches the inline style in the component */
+    /* Add any other wrapper styles if needed, but ResizableImageNodeView.tsx handles most via inline styles */
+  }
+  
+  .resizableImage {
+    display: block; /* Or inline, depending on desired interaction with text flow */
+    max-width: 100%;
+    height: auto;
+    cursor: default; /* Default cursor for the image */
+    /* Ensure no user-select or -webkit-user-drag here */
+  }
+  
+  /* Style for the resize handle, if preferred over inline styles */
+  .resizeHandle {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 12px;
+    height: 12px;
+    background-color: rgba(0, 0, 255, 0.7);
+    border: 1px solid white;
+    border-radius: 2px;
+    cursor: nwse-resize;
+    box-sizing: border-box;
+    opacity: 0.3; /* Default opacity, can be changed on hover/selection via JS or :hover */
+    transition: opacity 0.2s;
+  }
+  
+  .imageWrapper:hover .resizeHandle,
+  .imageWrapper.selected .resizeHandle { /* Assuming a 'selected' class might be added to wrapper */
+    opacity: 1;
+  }
+  

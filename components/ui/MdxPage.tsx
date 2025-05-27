@@ -1,6 +1,6 @@
 "use client";
 import { MDXProvider } from "@mdx-js/react";
-import WikiLink from "./WikiLink";
+import WikiLink from "../navigation/WikiLink";
 
 const components = {
   WikiLink,

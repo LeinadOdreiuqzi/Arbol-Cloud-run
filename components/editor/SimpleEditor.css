@@ -1,0 +1,1011 @@
+:root {
+  --editor-primary: #1976d2;
+  --editor-primary-light: #e3f2fd;
+  --editor-primary-dark: #0d47a1;
+  --editor-border: #d0d7de;
+  --editor-bg: #ffffff;
+  --editor-text: #24292f;
+  --editor-menu-bg: #f6f8fa;
+  --editor-hover: #eaeef2;
+  --editor-active: #ddf4ff;
+  --editor-radius: 6px;
+  --editor-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --editor-transition: all 0.2s ease;
+}
+
+.simple-editor {
+  border: 1px solid var(--editor-border);
+  border-radius: var(--editor-radius);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  box-shadow: var(--editor-shadow);
+  background-color: var(--editor-bg);
+  color: var(--editor-text);
+  transition: var(--editor-transition);
+}
+
+.simple-editor:focus-within {
+  border-color: var(--editor-primary);
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
+}
+
+.menu-bar {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--editor-border);
+  background-color: var(--editor-menu-bg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.menu-section {
+  display: flex;
+  gap: 4px;
+  border-right: 1px solid var(--editor-border);
+  padding-right: 8px;
+  margin-right: 4px;
+}
+
+.menu-section:last-child {
+  border-right: none;
+}
+
+.menu-bar button {
+  background-color: transparent;
+  border: 1px solid transparent; /* Cleaner resting state */
+  border-radius: var(--editor-radius); /* Consistent radius */
+  padding: 0; /* Remove padding, rely on width/height and flex centering */
+  width: 32px;   /* Fixed width */
+  height: 32px;  /* Fixed height */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--editor-transition);
+  color: var(--editor-text);
+  font-size: 16px; /* Slightly larger for icons */
+}
+
+.menu-bar button:hover {
+  background-color: var(--editor-hover);
+  border-color: var(--editor-border); /* Show border on hover */
+}
+
+.menu-bar button.is-active {
+  background-color: var(--editor-active);
+  border-color: var(--editor-primary);
+  color: var(--editor-primary);
+}
+
+.menu-bar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.menu-bar .icon {
+  /* font-size: 14px; */ /* Adjusted in button directly */
+  font-weight: normal; /* Icons might not need bold */
+  line-height: 1; /* Ensure icon is centered */
+}
+
+/* Specific Icon Adjustments if needed - example */
+/* .menu-bar button[title="Negrita"] .icon { font-weight: bold; } */
+
+
+.ProseMirror {
+  padding: 12px;
+  min-height: 100%;
+  outline: none;
+  line-height: 1.6;
+  color: var(--editor-text);
+  background-color: var(--editor-bg);
+}
+
+.ProseMirror p {
+  margin: 1em 0;
+}
+
+.ProseMirror h1 {
+  font-size: 2em;
+  margin: 1em 0 0.5em;
+  color: var(--editor-primary-dark);
+  border-bottom: 1px solid var(--editor-border);
+  padding-bottom: 0.3em;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5em;
+  margin: 1em 0 0.5em;
+  color: var(--editor-primary-dark);
+}
+
+.ProseMirror h3 {
+  font-size: 1.3em;
+  margin: 1em 0 0.5em;
+  color: var(--editor-primary-dark);
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 2em;
+  margin: 1em 0;
+}
+
+.ProseMirror li {
+  margin: 0.5em 0;
+}
+
+.ProseMirror blockquote {
+  border-left: 3px solid var(--editor-primary-light);
+  margin-left: 0;
+  padding: 0.5em 1em;
+  color: #555;
+  background-color: #f9f9f9;
+  border-radius: 0 var(--editor-radius) var(--editor-radius) 0;
+}
+
+.ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em auto;
+  border-radius: var(--editor-radius);
+  box-shadow: var(--editor-shadow);
+  transition: var(--editor-transition);
+}
+
+.ProseMirror img:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilos para videos embebidos */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+  height: 0;
+  overflow: hidden;
+  margin: 1em 0;
+  border-radius: var(--editor-radius);
+  box-shadow: var(--editor-shadow);
+}
+
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: var(--editor-radius);
+}
+
+.ProseMirror pre {
+  background-color: #f6f8fa;
+  border-radius: var(--editor-radius);
+  padding: 12px 16px;
+  font-family: 'Courier New', Courier, monospace;
+  overflow-x: auto;
+  border: 1px solid var(--editor-border);
+}
+
+.ProseMirror code {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+  color: #d63384;
+}
+
+.ProseMirror a {
+  color: var(--editor-primary);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--editor-primary);
+  transition: var(--editor-transition);
+}
+
+.ProseMirror a:hover {
+  border-bottom: 1px solid var(--editor-primary);
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .menu-bar {
+    padding: 8px;
+    gap: 4px;
+  }
+  
+  .menu-bar button {
+    padding: 4px 8px;
+    min-width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  
+  .menu-section {
+    padding-right: 4px;
+    margin-right: 2px;
+  }
+  
+  .ProseMirror {
+    padding: 10px;
+    min-height: 200px; /* Keep a min-height for smaller screens */
+  }
+}
+
+/* Image Bubble Menu Styles */
+.image-bubble-menu {
+  display: flex;
+  background-color: #333; /* Dark background */
+  padding: 4px;
+  border-radius: 6px;
+  box-shadow: var(--editor-shadow);
+}
+
+.image-bubble-menu button {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 6px 8px;
+  margin: 0 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.85em;
+  transition: var(--editor-transition);
+}
+
+.image-bubble-menu button:hover {
+  background-color: #555;
+}
+
+.image-bubble-menu button.is-active {
+  background-color: var(--editor-primary); /* Use theme's active color */
+  color: white;
+}
+
+/* Text Bubble Menu Styles */
+.text-bubble-menu {
+  display: flex;
+  background-color: var(--editor-bg); /* Lighter background */
+  padding: 5px;
+  border-radius: var(--editor-radius);
+  box-shadow: var(--editor-shadow);
+  border: 1px solid var(--editor-border);
+  align-items: center;
+}
+
+.text-bubble-menu button {
+  background: transparent;
+  border: none;
+  color: var(--editor-text);
+  padding: 6px 8px; /* Consistent padding */
+  margin: 0 2px;
+  cursor: pointer;
+  border-radius: 4px; /* Rounded corners for buttons */
+  font-size: 0.9em; /* Slightly smaller font */
+  transition: var(--editor-transition);
+  min-width: 28px; /* Minimum width for icon buttons */
+  height: 28px; /* Fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-bubble-menu button:hover {
+  background-color: var(--editor-hover);
+}
+
+.text-bubble-menu button.is-active {
+  background-color: var(--editor-active);
+  color: var(--editor-primary);
+  /* border: 1px solid var(--editor-primary); Optional: border for active state */
+}
+
+.text-bubble-menu button:disabled {
+  color: #adb5bd; /* Muted color for disabled buttons */
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+.bubble-menu-separator {
+  width: 1px;
+  height: 20px; /* Adjust height to align with buttons */
+  background-color: var(--editor-border);
+  margin: 0 6px; /* Spacing around separator */
+}
+
+
+/* --- Global Drag Handle Styles for SimpleEditor.css --- */
+.drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; /* Adjusted size */
+  height: 22px; /* Adjusted size */
+  cursor: grab;
+  color: #aaa; /* Handle icon/content color */
+  position: absolute; /* Positioned by the extension relative to the draggable node */
+  /* left: -28px; */ /* The extension itself usually handles positioning. 
+                     If manual adjustment is needed, this can be uncommented and tweaked.
+                     The GlobalDragHandle extension might have its own way to set offset or might appear on hover. */
+  background-color: #f8f9fa; /* Light background for the handle */
+  border: 1px solid #dee2e6; /* Subtle border */
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  opacity: 0.6; /* Slightly transparent by default */
+  transition: opacity 0.2s ease-in-out, background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.drag-handle:hover {
+  color: #333;
+  background-color: #e9ecef; /* Slightly darker on hover */
+  opacity: 1;
+}
+
+/* When dragging (the extension might add a class to the body or editor) */
+/* .tiptap-is-dragging .drag-handle,  */ /* Tiptap's specific class might be different or not used by this extension */
+.drag-handle:active { /* More general active state */
+  cursor: grabbing;
+  background-color: #dee2e6; /* Darker when active/grabbing */
+  color: #000;
+  opacity: 1;
+}
+
+/* If the extension adds a class to hide the handle, this can be used */
+.drag-handle.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- Dropdown Menu Styles --- */
+.dropdown-menu {
+  position: relative;
+  display: inline-block;
+  margin: 0 2px;
+  z-index: 100;
+}
+
+.dropdown-trigger {
+  padding: 8px 6px 8px 10px; /* Reducido el padding para hacerlo más compacto */
+  background-color: var(--editor-menu-bg);
+  border: 1px solid var(--editor-border);
+  border-radius: var(--editor-radius);
+  color: var(--editor-text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px; /* Reducido el espacio entre texto y flecha */
+  font-size: 14px;
+  line-height: 1.5;
+  transition: all 0.2s ease;
+  height: 36px;
+  min-width: 100px; /* Ancho mínimo ligeramente reducido */
+  white-space: nowrap;
+  position: relative;
+  text-align: left;
+  box-sizing: border-box;
+  font-weight: 500;
+}
+
+/* Ajuste para la flecha existente del dropdown */
+.dropdown-arrow {
+  margin-left: 2px; /* Espacio mínimo entre el texto y la flecha */
+  font-size: 0.7em; /* Flecha ligeramente más pequeña */
+  transition: transform 0.2s ease;
+}
+
+.dropdown-trigger[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+/* Mejorar la apariencia del botón al pasar el ratón */
+.dropdown-trigger:hover {
+  background-color: var(--editor-hover);
+  border-color: var(--editor-primary);
+  transform: translateY(-1px);
+}
+
+.dropdown-trigger:active {
+  transform: translateY(0);
+}
+
+.dropdown-trigger:hover {
+  background-color: var(--editor-hover);
+  border-color: var(--editor-primary);
+}
+
+.dropdown-trigger:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+  z-index: 2; /* Ensure focus ring is above other elements */
+}
+
+.dropdown-trigger:active {
+  transform: translateY(1px);
+}
+
+.dropdown-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: 14px;
+}
+
+.dropdown-title {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-arrow {
+  font-size: 10px;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+
+.dropdown-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: var(--editor-bg);
+  border: 1px solid var(--editor-border);
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-width: 240px; /* Aumentado para más espacio */
+  max-width: 340px;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-5px);
+  visibility: hidden;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0; /* Aumentado el padding vertical */
+  overflow: hidden;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6; /* Mejor interlineado */
+  color: var(--editor-text);
+}
+
+.dropdown-menu:hover .dropdown-panel,
+.dropdown-menu:focus-within .dropdown-panel,
+.dropdown-panel.open {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.dropdown-item {
+  padding: 10px 20px; /* Más espacio interno */
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--editor-text);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Más espacio entre icono y texto */
+  position: relative;
+  margin: 2px 8px; /* Más espacio entre elementos */
+  border-radius: 4px;
+  width: calc(100% - 16px); /* Ajuste por el nuevo margen */
+  box-sizing: border-box;
+  white-space: nowrap;
+  min-height: 36px; /* Altura mínima aumentada */
+  font-weight: 400; /* Peso de fuente normal para mejor legibilidad */
+}
+
+.dropdown-item > * {
+  vertical-align: middle;
+  line-height: 1.4; /* Mejor interlineado para el contenido */
+}
+
+.dropdown-item svg {
+  flex-shrink: 0;
+  width: 18px; /* Iconos ligeramente más grandes */
+  height: 18px;
+  opacity: 0.9; /* Suavizar los iconos */
+}
+
+/* Estilos para el contenido interno de los dropdowns */
+.dropdown-item span {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Estilos para los botones dentro de los dropdowns */
+.dropdown-panel button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px; /* Reducido el padding horizontal */
+  text-align: left;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px; /* Reducido el espacio entre elementos */
+  color: var(--editor-text);
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  min-height: 32px;
+  box-sizing: border-box;
+}
+
+.dropdown-panel button:hover {
+  background-color: var(--editor-hover);
+  color: var(--editor-primary);
+}
+
+/* Selectores de color */
+.color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 12px;
+}
+
+.color-option {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.1s ease, border-color 0.1s ease;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+  border-color: var(--editor-border);
+}
+
+.color-option.active {
+  border-color: var(--editor-text);
+  transform: scale(1.1);
+  box-shadow: 0 0 0 2px var(--editor-primary);
+}
+
+/* Selectores de fuente */
+.font-selector {
+  padding: 4px 0;
+}
+
+.font-option {
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 14px;
+}
+
+.font-option:hover {
+  background-color: var(--editor-hover);
+  color: var(--editor-primary);
+}
+
+/* Controles de tamaño */
+.size-controls {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 8px;
+}
+
+.size-controls button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 4px;
+  background: var(--editor-menu-bg);
+  border: 1px solid var(--editor-border);
+}
+
+.size-controls button:hover {
+  background: var(--editor-hover);
+  border-color: var(--editor-primary);
+}
+
+/* Grupos de controles */
+.control-group {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--editor-border);
+  margin-bottom: 4px;
+}
+
+.control-group:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.control-group-title {
+  padding: 6px 16px 4px;
+  font-size: 12px;
+  color: var(--editor-text);
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+/* Mejorar los inputs dentro de los dropdowns */
+.dropdown-panel input[type="text"],
+.dropdown-panel input[type="number"],
+.dropdown-panel select {
+  width: 100%;
+  padding: 8px 12px;
+  margin: 4px 0;
+  border: 1px solid var(--editor-border);
+  border-radius: 4px;
+  background: var(--editor-bg);
+  color: var(--editor-text);
+  font-size: 14px;
+}
+
+.dropdown-panel input[type="text"]:focus,
+.dropdown-panel input[type="number"]:focus,
+.dropdown-panel select:focus {
+  outline: none;
+  border-color: var(--editor-primary);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.dropdown-item:not(:last-child) {
+  margin-bottom: 2px;
+}
+
+.dropdown-item:hover {
+  background-color: var(--editor-hover);
+  color: var(--editor-primary);
+  transform: translateX(2px);
+}
+
+.dropdown-item:focus {
+  outline: none;
+  background-color: var(--editor-active);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.dropdown-item:active {
+  transform: translateY(1px);
+}
+
+.dropdown-item[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: var(--editor-border);
+  margin: 6px 8px;
+  border: none;
+  opacity: 0.5;
+}
+
+/* Submenu styles */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu > .dropdown-panel {
+  left: 100%;
+  top: -6px;
+  margin-left: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-5px);
+}
+
+.dropdown-submenu:hover > .dropdown-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* Grouped items */
+.dropdown-group {
+  padding: 4px 0;
+  margin: 0;
+  list-style: none;
+}
+
+.dropdown-group-title {
+  padding: 6px 16px 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--editor-text);
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    width: 100%;
+  }
+  
+  .dropdown-trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .dropdown-panel {
+    position: fixed;
+    top: auto !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    max-height: 60vh;
+    overflow-y: auto;
+    transform: translateY(10px) !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: auto !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .dropdown-menu:hover .dropdown-panel,
+  .dropdown-menu:focus-within .dropdown-panel,
+  .dropdown-panel.open {
+    transform: translateY(0) !important;
+  }
+  
+  .dropdown-submenu > .dropdown-panel {
+    left: 10px !important;
+    right: 10px !important;
+    margin-left: 0;
+    margin-top: 8px;
+    position: relative !important;
+    width: auto !important;
+    transform: none !important;
+    box-shadow: none;
+    border: 1px solid var(--editor-border);
+  }
+  
+  .dropdown-submenu:hover > .dropdown-panel {
+    transform: none !important;
+  }
+}
+
+/* --- Global Button Styles for PageManager --- */
+.pm-button {
+  padding: 8px 15px;
+  border: 1px solid var(--editor-border);
+  border-radius: var(--editor-radius);
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--editor-bg);
+  color: var(--editor-text);
+  cursor: pointer;
+  transition: var(--editor-transition);
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none; /* For anchor tags styled as buttons */
+}
+
+.pm-button:hover {
+  border-color: var(--editor-primary-dark);
+  background-color: var(--editor-hover);
+  color: var(--editor-text); /* Ensure text color doesn't change unexpectedly */
+}
+
+.pm-button:active {
+  background-color: var(--editor-active);
+  border-color: var(--editor-primary);
+  transform: translateY(1px); /* Subtle press effect */
+}
+
+.pm-button:disabled,
+.pm-button[disabled] { /* Ensure proper selector for disabled state */
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--editor-hover);
+  border-color: var(--editor-border);
+  color: #868e96; /* Muted text color for disabled */
+}
+
+/* Primary Button */
+.pm-button-primary {
+  background-color: var(--editor-primary);
+  color: white;
+  border-color: var(--editor-primary);
+}
+
+.pm-button-primary:hover {
+  background-color: var(--editor-primary-dark);
+  border-color: var(--editor-primary-dark);
+  color: white;
+}
+
+.pm-button-primary:active {
+  background-color: #0b5aa2; /* Slightly darker for active primary */
+  border-color: #0b5aa2;
+  color: white;
+}
+
+.pm-button-primary:disabled,
+.pm-button-primary[disabled] {
+  background-color: var(--editor-primary-light);
+  border-color: var(--editor-primary-light);
+  color: #adadad;
+  opacity: 0.7;
+}
+
+/* Secondary Button */
+.pm-button-secondary {
+  background-color: var(--editor-menu-bg);
+  color: var(--editor-text);
+  border-color: var(--editor-border);
+}
+
+.pm-button-secondary:hover {
+  background-color: var(--editor-hover);
+  border-color: #b0b8c2; /* Slightly darker border */
+  color: var(--editor-text);
+}
+
+.pm-button-secondary:active {
+  background-color: #e2e6ea; /* Slightly darker for active secondary */
+  border-color: #a0a8b0;
+}
+
+.pm-button-secondary:disabled,
+.pm-button-secondary[disabled] {
+  background-color: #f8f9fa;
+  border-color: #e9ecef;
+  color: #adb5bd;
+}
+
+/* Subtle Button (e.g., for text-like buttons or less prominent actions) */
+.pm-button-subtle {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--editor-text);
+  font-weight: normal;
+}
+
+.pm-button-subtle:hover {
+  background-color: var(--editor-hover);
+  /* border-color: var(--editor-border); Optional: show border on hover */
+  color: var(--editor-primary);
+}
+
+.pm-button-subtle:active {
+  background-color: var(--editor-active);
+  color: var(--editor-primary);
+}
+
+/* Styles for new controls within dropdown panels */
+.dropdown-item-group {
+  display: flex;
+  flex-direction: column; /* Stack label and control */
+  gap: 4px; /* Space between label and control, and between groups */
+  margin-bottom: 8px; /* Space between item groups */
+}
+.dropdown-item-group:last-child {
+  margin-bottom: 0;
+}
+
+.dropdown-label {
+  font-size: 0.85em;
+  color: var(--editor-text);
+  margin-bottom: 2px; /* Small space above the control */
+  font-weight: 500;
+}
+
+.dropdown-select,
+.dropdown-color-picker {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--editor-border);
+  border-radius: var(--editor-radius);
+  background-color: var(--editor-bg);
+  color: var(--editor-text);
+  font-size: 0.9em;
+  box-sizing: border-box; /* Ensure padding and border don't increase width */
+}
+
+.dropdown-select:hover,
+.dropdown-color-picker:hover {
+  border-color: var(--editor-primary);
+}
+
+.dropdown-select:focus,
+.dropdown-color-picker:focus {
+  outline: none;
+  border-color: var(--editor-primary);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.dropdown-color-picker {
+  height: 32px; /* Consistent height with other inputs/buttons */
+  padding: 2px 4px; /* Adjust padding for color input */
+}
+
+.color-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Space between color picker and clear button */
+}
+
+.color-input-wrapper .dropdown-color-picker {
+  flex-grow: 1; /* Color picker takes available space */
+}
+
+.clear-color-button.menu-bar-button {
+  width: auto; /* Override fixed width from menu-bar-button */
+  min-width: 28px; /* Ensure small clickable area */
+  height: 28px;
+  padding: 0 6px; /* Small padding */
+  font-size: 1em; /* Adjust icon size if needed */
+  border-color: transparent; /* Make it more subtle */
+}
+.clear-color-button.menu-bar-button:hover {
+  background-color: var(--editor-hover);
+  border-color: var(--editor-border);
+}
+
+/* Separator for dropdown menu items */
+.dropdown-separator {
+  height: 1px;
+  background-color: var(--editor-border);
+  margin: 6px 0; /* Vertical spacing */
+  border: none; /* Remove default hr border */
+}
+
+.pm-button-subtle:disabled,
+.pm-button-subtle[disabled] {
+  background-color: transparent;
+  color: #adb5bd;
+  opacity: 0.7;
+}
+
+/* Icon usage within pm-buttons */
+.pm-button .pm-icon {
+  margin-right: 6px;
+  font-size: 1.1em; /* Adjust if necessary */
+}
+.pm-button .pm-icon-solo { /* For buttons with only an icon */
+  margin-right: 0; 
+  font-size: 1.2em; /* Slightly larger for solo icons */
+}

@@ -73,8 +73,13 @@ function TopicDropdown({ node }: { node: TopicNode }) {
 
 import TextSizeControls from './TextSizeControls';
 
-export default function WikiNav({ navOpen, setNavOpen, ThemeToggle }: { navOpen: boolean; setNavOpen: (open: boolean) => void; ThemeToggle: React.ComponentType; }) {
+export default function WikiNav({ initialNavOpen = true, ThemeToggle }: { 
+  initialNavOpen?: boolean; 
+  ThemeToggle: React.ComponentType; 
+}) {
+  const [navOpen, setNavOpen] = useState(initialNavOpen);
   const [tree, setTree] = useState<TopicNode[] | null>(null);
+  
   useEffect(() => {
     fetchNotesTree().then(setTree).catch(() => setTree([]));
   }, []);

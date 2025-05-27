@@ -2,16 +2,16 @@
 import React from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import LargeKnowledgeGraph from "../../components/LargeKnowledgeGraph";
-import ThemeToggle from "../../components/ThemeToggle";
-import WikiHeadingsLinks from "../../components/WikiHeadingsLinks";
-import Pagination from "../../components/Pagination";
+import LargeKnowledgeGraph from "../../components/knowledge-graph/LargeKnowledgeGraph";
+import ThemeToggle from "../../components/ui/ThemeToggle";
+import WikiHeadingsLinks from "../../components/ui/WikiHeadingsLinks";
+import Pagination from "../../components/navigation/Pagination";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { pagesToTree, TopicNode } from "@/lib/notes-graph-util";
-import RichTextRenderer from "@/components/RichTextRenderer";
-import PageHierarchyNavigation from "@/components/PageHierarchyNavigation";
+import RichTextRenderer from "@/components/ui/RichTextRenderer";
+import PageHierarchyNavigation from "@/components/navigation/PageHierarchyNavigation";
 
 /**
  * Función auxiliar para paginar el contenido

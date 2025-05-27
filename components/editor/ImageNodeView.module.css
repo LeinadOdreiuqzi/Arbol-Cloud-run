@@ -13,8 +13,8 @@
   display: block; /* Ensure img is block level within wrapper */
   max-width: 100%;
   height: auto; /* Maintain aspect ratio */
-  user-select: none; /* Prevent selecting image text */
-  -webkit-user-drag: none; /* Prevent default browser image drag */
+  /* user-select: none; */ /* Removed to allow dragging */
+  /* -webkit-user-drag: none; */ /* Removed to allow dragging */
 }
 
 /* Style when the node is selected */
