@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import RichTextRenderer from "@/components/ui/RichTextRenderer";
 import dynamic from 'next/dynamic';
 import { Editor } from "@tiptap/react";
-import EditorTableOfContents from "@/components/editor/EditorTableOfContents";
-import PageHierarchyPanel from "@/components/navigation/PageHierarchyPanel";
+import RichTextRenderer from "./RichTextRenderer";
+import EditorTableOfContents from "../editor/EditorTableOfContents";
+import PageHierarchyPanel from "../navigation/PageHierarchyPanel";
 
 // Función para construir el árbol de páginas
 function buildTree(pages: any[]) {
@@ -179,37 +179,40 @@ export default function PageManager() {
     await handleCreate(null, 1, title);
   };
 
-  const handleCreateEspecialidad = async () => {
-    if (!selectedPage || selectedLevel !== 1) {
-      alert("Selecciona un Área para agregar una Especialidad.");
+  const handleCreateEspecialidad = async (parentNode?: any) => {
+    const nodeToUse = parentNode || selectedPage;
+    if (!nodeToUse || (nodeToUse && nodeToUse.level !== 1)) {
+      alert("Selecciona un Área para agregar una Especialidad o haz clic en el botón 'Nuevo Área' primero.");
       return;
     }
     const tipo = getTypeByLevel(2);
     const title = prompt(`Título de la nueva ${tipo}:`);
     if (!title) return;
-    await handleCreate(selectedPage, 2, title);
+    await handleCreate(nodeToUse, 2, title);
   };
 
-  const handleCreateTema = async () => {
-    if (!selectedPage || selectedLevel !== 2) {
-      alert("Selecciona una Especialidad para agregar un Tema.");
+  const handleCreateTema = async (parentNode?: any) => {
+    const nodeToUse = parentNode || selectedPage;
+    if (!nodeToUse || (nodeToUse && nodeToUse.level !== 2)) {
+      alert("Selecciona una Especialidad para agregar un Tema o navega a la jerarquía correcta.");
       return;
     }
     const tipo = getTypeByLevel(3);
     const title = prompt(`Título del nuevo ${tipo}:`);
     if (!title) return;
-    await handleCreate(selectedPage, 3, title);
+    await handleCreate(nodeToUse, 3, title);
   };
 
-  const handleCreateContenido = async () => {
-    if (!selectedPage || selectedLevel !== 3) {
-      alert("Selecciona un Tema para agregar un Contenido.");
+  const handleCreateContenido = async (parentNode?: any) => {
+    const nodeToUse = parentNode || selectedPage;
+    if (!nodeToUse || (nodeToUse && nodeToUse.level !== 3)) {
+      alert("Selecciona un Tema para agregar un Contenido o navega a la jerarquía correcta.");
       return;
     }
     const tipo = getTypeByLevel(4);
     const title = prompt(`Título del nuevo ${tipo}:`);
     if (!title) return;
-    await handleCreate(selectedPage, 4, title);
+    await handleCreate(nodeToUse, 4, title);
   };
 
   const handleCreate = async (parent: any, level: number, title: string) => {
@@ -297,6 +300,27 @@ export default function PageManager() {
   };
   
   const handleEditNode = (node: any) => {
+    // Manejar acciones de agregar nodos
+    if (node._action) {
+      switch (node._action) {
+        case 'add-especialidad':
+          handleCreateEspecialidad(node.parentNode);
+          return;
+        case 'add-tema':
+          handleCreateTema(node.parentNode);
+          return;
+        case 'add-contenido':
+          handleCreateContenido(node.parentNode);
+          return;
+        case 'edit':
+          // Continuar con la edición normal
+          break;
+        default:
+          return;
+      }
+    }
+
+    // Si es una edición normal
     const newTitle = prompt("Nuevo nombre:", node.label || node.title);
     if (!newTitle || newTitle === node.label) return;
     
@@ -403,6 +427,7 @@ export default function PageManager() {
                 }))
               }))}
               selectedId={selectedId}
+              selectedNode={selectedPage || null}
               onSelect={handleSelectNodeWithGuard}
               loading={loading}
               error={error}

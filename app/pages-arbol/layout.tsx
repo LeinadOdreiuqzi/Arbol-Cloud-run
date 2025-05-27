@@ -2,10 +2,10 @@
 import React from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import LargeKnowledgeGraph from "@/components/knowledge-graph/LargeKnowledgeGraph";
-import ThemeToggle from "@/components/ui/ThemeToggle";
-import WikiHeadingsLinks from "@/components/ui/WikiHeadingsLinks";
-import Pagination from "@/components/navigation/Pagination";
+import LargeKnowledgeGraph from "../../components/knowledge-graph/LargeKnowledgeGraph";
+import ThemeToggle from "../../components/ui/ThemeToggle";
+import WikiHeadingsLinks from "../../components/ui/WikiHeadingsLinks";
+import Pagination from "../../components/navigation/Pagination";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";

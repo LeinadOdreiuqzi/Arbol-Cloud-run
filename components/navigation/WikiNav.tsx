@@ -71,7 +71,7 @@ function TopicDropdown({ node }: { node: TopicNode }) {
   );
 }
 
-import TextSizeControls from '@/components/editor/TextSizeControls';
+import TextSizeControls from '../editor/TextSizeControls';
 
 export default function WikiNav({ initialNavOpen = true, ThemeToggle }: { 
   initialNavOpen?: boolean; 
