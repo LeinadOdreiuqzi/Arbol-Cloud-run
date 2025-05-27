@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --no-lint",
+    "build:prod": "next build --no-lint",
     "start": "next start",
     "lint": "next lint --max-warnings=0"
   },
@@ -39,7 +40,7 @@
     "lowlight": "^3.3.0",
     "next": "^15.3.1",
     "next-themes": "^0.4.6",
-    "pg": "^8.16.0",
+    "pg": "^8.11.3",
     "react": "^19.0.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
