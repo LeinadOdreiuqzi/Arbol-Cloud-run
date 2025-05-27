@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import RichTextRenderer from "./RichTextRenderer";
+import RichTextRenderer from "@/components/ui/RichTextRenderer";
 import dynamic from 'next/dynamic';
 import { Editor } from "@tiptap/react";
-import EditorTableOfContents from "../editor/EditorTableOfContents";
-import PageHierarchyPanel from "../navigation/PageHierarchyPanel";
+import EditorTableOfContents from "@/components/editor/EditorTableOfContents";
+import PageHierarchyPanel from "@/components/navigation/PageHierarchyPanel";
 
 // Función para construir el árbol de páginas
 function buildTree(pages: any[]) {
