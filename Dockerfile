@@ -4,7 +4,7 @@ FROM node:20-alpine AS base
 # Instalar dependencias solo cuando sea necesario
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine para entender por qué se pueden necesitar libc6-compat
-RUN apk add --no-cache libc6-compat postgresql-client
+RUN apk add --no-cache libc6-compat postgresql-client python3 make g++
 WORKDIR /app
 
 # Copiar package.json y package-lock.json (si está disponible)
