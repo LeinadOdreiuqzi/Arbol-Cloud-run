@@ -4,7 +4,7 @@ FROM node:20-alpine AS base
 # Instalar dependencias solo cuando sea necesario
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine para entender por qué se pueden necesitar libc6-compat
-RUN apk add --no-cache libc6-compat postgresql-client python3 make g++
+RUN apk add --no-cache libc6-compat postgresql-client
 WORKDIR /app
 
 # Copiar package.json y package-lock.json (si está disponible)
@@ -27,7 +27,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV NEXT_LINT_IGNORE_ESLINT_ERROR=true
 
 # Ejecuta build sin validación de tipos ni linting
-RUN NEXT_TELEMETRY_DISABLED=1 NEXT_PUBLIC_IGNORE_ESLINT=1 npm run build
+RUN npm run build:prod
 
 # Imagen de producción, copiar todos los archivos y ejecutar next
 FROM base AS runner
@@ -35,7 +35,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 # Descomenta la siguiente línea en caso de querer deshabilitar la telemetría
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs

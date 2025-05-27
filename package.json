@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build --no-lint",
+    "build": "next build",
     "build:prod": "next build --no-lint",
     "start": "next start",
-    "lint": "next lint --max-warnings=0"
+    "lint": "next lint"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.0",
@@ -31,7 +31,7 @@
     "@tiptap/extension-table-row": "^2.11.9",
     "@tiptap/extension-text-align": "^2.11.9",
     "@tiptap/extension-text-style": "^2.12.0",
-    "@tiptap/extension-underline": "^2.12.0",
+
     "@tiptap/pm": "^2.11.9",
     "@tiptap/react": "^2.11.9",
     "@tiptap/starter-kit": "^2.11.9",
