@@ -27,7 +27,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV NEXT_LINT_IGNORE_ESLINT_ERROR=true
 
 # Ejecuta build sin validación de tipos ni linting
-RUN npm run build
+RUN NEXT_TELEMETRY_DISABLED=1 NEXT_PUBLIC_IGNORE_ESLINT=1 npm run build
 
 # Imagen de producción, copiar todos los archivos y ejecutar next
 FROM base AS runner
